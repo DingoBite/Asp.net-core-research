@@ -1,4 +1,5 @@
 using GameServiceApplication.Data;
+using GameServiceApplication.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
@@ -6,6 +7,8 @@ using Microsoft.OpenApi.Models;
 var allowSpecificOrigins = "_allowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IHashProvider, HashProvider>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -51,7 +54,13 @@ app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+    pattern: "{controller}/{action}/{id?}",
+    defaults: new
+    {
+        controller = "Authorization",
+        action = "IsAuthorized"
+    }
+    );
 
 app.MapFallbackToFile("index.html");
 

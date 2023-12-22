@@ -58,7 +58,7 @@ public class AuthorizationController : ControllerBase
     }
 
     [HttpPost]
-    [Route("login")]S
+    [Route("login")]
     public async Task<bool> LogIn([FromBody] UserLoginRequest loginRequest)
     {
         var user = await _dbContext.PlayerProfiles.FirstOrDefaultAsync(

@@ -5,7 +5,13 @@
 export const environment = {
   production: false,
   apiBaseUrl: "https://localhost:7047",
-  playerProfilesEndpoint: "/playerprofiles",
+  usersEndpoint: "/users",
+  userProfilesEndpoint: "/profiles",
+  profileEndpoint: "/profile",
+  balanceEndpoint: "/balance",
+  inventoryEndpoint: "/inventory",
+
+  idParameterEndpoint: "/:id"
 };
 
 /*

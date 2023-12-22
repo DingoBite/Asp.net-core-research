@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy(allowSpecificOrigins, policy =>
         {
-            policy.WithOrigins("https://localhost:44484")
+            policy.WithOrigins("https://locaFlhost:44484")
                 .WithHeaders(HeaderNames.ContentType, "x-custom-header");
         });
     }

@@ -16,23 +16,23 @@
           <h6 class="card-title">Phone Number</h6>
         </div>
       </div>
-      <div *ngFor="let player of searchResultPlayers">
-        <div class="row" (click)="redirectToPlayerPage(player.playerId)">
+      <div *ngFor="let user of users">
+        <div class="row" (click)="playerProfilesService.redirectToProfilePage(user.playerId)">
           <div class="col-1">
-            <h6 class="card-title" style="color: rgba(135,151,137,0.5)">{{player.playerId}}</h6>
+            <h6 class="card-title" style="color: rgba(135,151,137,0.5)">{{user.playerId}}</h6>
           </div>
           <div class="col">
-            <h6 class="card-title">{{player.name}}</h6>
+            <h6 class="card-title">{{user.name}}</h6>
           </div>
           <div class="col">
             <h6 class="card-title" style="font-size: 12px">
-              {{player.email}}
+              {{user.email}}
             </h6>
           </div>
           <div class="col">
             <h6 class="card-title" style="font-size: 16px">
 <!--              <i class="fa fa-phone pe-2" style="font-size: 14px" ></i>-->
-              {{player.phoneNumber}}
+              {{user.phoneNumber}}
             </h6>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayerProfilesService} from "./player-profiles.service";
 import {PlayerProfileRm} from "./player-profile.rm";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-players',
@@ -9,23 +10,19 @@ import {PlayerProfileRm} from "./player-profile.rm";
 })
 export class PlayerProfilesComponent implements OnInit{
 
-  public searchResultPlayers: PlayerProfileRm[] = [];
-  constructor(private playerProfilesService: PlayerProfilesService) {}
+  public users: PlayerProfileRm[] = [];
+  constructor(public readonly playerProfilesService: PlayerProfilesService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.loadPlayerProfiles();
+    this.subscribe();
+    this.playerProfilesService.init(this.route);
   }
 
-  loadPlayerProfiles(): void {
+  subscribe(): void {
     this.playerProfilesService.getAllPlayerProfiles()
       .subscribe(response => {
-        this.searchResultPlayers = response;
+        this.users = response;
       });
     console.log(`Loaded all players`);
-  }
-
-  redirectToPlayerPage(id: number): void {
-    this.playerProfilesService.redirectToProfilePage(id);
-    console.log(`Redirect to player with id: ${id}`);
   }
 }

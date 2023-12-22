@@ -21,6 +21,9 @@ const userProfilesEndpoint = usersEndpoint + environment.userProfilesEndpoint;
     AppComponent,
     NavMenuComponent,
     PlayerProfilesComponent,
+    ProfileComponent,
+    BalanceComponent,
+    InventoryComponent
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -30,10 +33,14 @@ const userProfilesEndpoint = usersEndpoint + environment.userProfilesEndpoint;
       {path: '', redirectTo: usersEndpoint, pathMatch: "full"},
       {path: usersEndpoint, component: PlayerProfilesComponent, pathMatch: 'full'},
       {path: userProfilesEndpoint, redirectTo: usersEndpoint, pathMatch: "full"},
-      {path: userProfilesEndpoint + environment.profileEndpoint + environment.idParameterEndpoint, component: ProfileComponent, pathMatch: "full"},
-      // {path: userProfilesEndpoint + environment.balanceEndpoint + environment.idParameterEndpoint, component: BalanceComponent, pathMatch: "full"},
-      // {path: userProfilesEndpoint + environment.inventoryEndpoint + environment.idParameterEndpoint, component: InventoryComponent, pathMatch: "full"},
-    ]),
+      {path: userProfilesEndpoint + environment.profileEndpoint + environment.idParameterEndpoint, component: ProfileComponent},
+      {path: userProfilesEndpoint + environment.balanceEndpoint + environment.idParameterEndpoint, component: BalanceComponent},
+      {path: userProfilesEndpoint + environment.inventoryEndpoint + environment.idParameterEndpoint, component: InventoryComponent},
+    ],
+    // {
+    //   enableTracing: true,
+    // }
+    ),
     ReactiveFormsModule
   ],
   providers: [],

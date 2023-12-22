@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiBaseUrl: "https://localhost:7047",
+  webBaseUrl: "https://localhost:44484",
   usersEndpoint: "/users",
   userProfilesEndpoint: "/profiles",
   profileEndpoint: "/profile",

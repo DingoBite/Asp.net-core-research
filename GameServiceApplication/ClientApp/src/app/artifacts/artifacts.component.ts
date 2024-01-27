@@ -8,8 +8,8 @@ export interface ArtifactRm {
   description: string
   effectType: number
   effectStrength: number
-  rarity: string
   rarityId: number
+  defaultCost: number
 }
 
 export class Artifact implements ArtifactRm {
@@ -18,8 +18,8 @@ export class Artifact implements ArtifactRm {
   description = ""
   effectType = 0
   effectStrength = 0
-  rarity = ""
   rarityId = 0
+  defaultCost = 0.0
 }
 
 export interface CreateArtifactRequestRm {
@@ -28,17 +28,24 @@ export interface CreateArtifactRequestRm {
   effectStrength: number
   effectType: number
   rarity: number
+  defaultCost: number
 }
 
 export class CreateArtifactRequest implements CreateArtifactRequestRm {
-  name= ""
-  description= ""
-  effectStrength= 0
-  effectType= 0
-  rarity= 0
+  name = ""
+  description = ""
+  effectStrength = 0
+  effectType = 0
+  rarity = 0
+  defaultCost = 0.0
 }
 
-export class IdNamePair {
+export interface IdNamePairRm {
+  id: number
+  name: string
+}
+
+export class IdNamePair implements IdNamePairRm{
   id = 0
   name = ""
 }
@@ -50,11 +57,16 @@ export class IdNamePair {
 })
 export class ArtifactsComponent implements OnInit {
   public createArtifactRequestRm: CreateArtifactRequestRm = {
-     name: "Shield", description: "Simple defence item", effectStrength: 1, effectType: 1, rarity: 0
+     name: "Shield", description: "Simple defence item", effectStrength: 1, effectType: 1, rarity: 0, defaultCost: 0.0
   }
 
-  private effectTypeToName = {}
-  private uniqueNameToEffectId = {}
+  public effectTypePairs: IdNamePairRm[] = []
+  public effectTypeToName: {[id: number]: string} = {}
+  public uniqueNameToEffectId: {[name: string]: number} = {}
+
+  public raritiesPairs: IdNamePairRm[] = []
+  public raritiesTypeToName: {[id: number]: string} = {}
+  public uniqueNameToRaritiesId: {[name: string]: number} = {}
 
   public artifacts: ArtifactRm[] = [];
 
@@ -62,25 +74,38 @@ export class ArtifactsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscribe();
+    this.loadAllArtifacts();
     this.artifactsService.init(this.route);
-  }
-
-  subscribe(): void {
-    this.artifactsService.getAllArtifacts()
-      .subscribe(response => {
-        this.artifacts = response;
-      });
 
     this.artifactsService.getAvailableTypesDict()
       .subscribe(response => {
+        this.effectTypePairs = response;
         this.effectTypeToName = {}
         this.uniqueNameToEffectId = {}
-        // for (const p: IdNamePair in response){
-        //   console.log(p)
-        //   // this.effectTypeToName[p.id] = p.name;
-        //   // this.uniqueNameToEffectId[`${p.id} ${p.name}`] = 0;
-        // }
+        console.log(response)
+        response.forEach(p => {
+          this.effectTypeToName[p.id] = p.name;
+          this.uniqueNameToEffectId[`${p.id} ${p.name}`] = 0;
+        })
+      });
+
+    this.artifactsService.getAvailableRaritiesDict()
+      .subscribe(response => {
+        this.raritiesPairs = response;
+        this.raritiesTypeToName = {}
+        this.uniqueNameToRaritiesId = {}
+        console.log(response)
+        response.forEach(p => {
+          this.raritiesTypeToName[p.id] = p.name;
+          this.uniqueNameToRaritiesId[`${p.id} ${p.name}`] = 0;
+        })
+      });
+  }
+
+  loadAllArtifacts(): void {
+    this.artifactsService.getAllArtifacts()
+      .subscribe(response => {
+        this.artifacts = response;
       });
   }
 
@@ -89,6 +114,7 @@ export class ArtifactsComponent implements OnInit {
     this.artifactsService.postRegisterArtifact(this.createArtifactRequestRm).subscribe(
       response => {
         console.log(`Created artifact`);
+        this.loadAllArtifacts();
       })
   }
 }

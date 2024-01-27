@@ -19,5 +19,5 @@ public record UserRegisterResponse(ResponseState State);
 
 
 public record IdNamePair(int Id, string Name);
-public record ArtifactRegisterRequest(string Name, string Description, int EffectStrength, int EffectType, int Rarity);
+public record ArtifactRegisterRequest(string Name, string Description, int EffectStrength, int EffectType, int Rarity, double DefaultCost);
 

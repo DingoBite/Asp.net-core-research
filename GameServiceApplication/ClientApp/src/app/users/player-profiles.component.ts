@@ -76,11 +76,11 @@ export class PlayerProfilesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscribe();
+    this.loadAllProfiles();
     this.playerProfilesService.init(this.route);
   }
 
-  subscribe(): void {
+  loadAllProfiles(): void {
     this.playerProfilesService.getAllPlayerProfiles()
       .subscribe(response => {
         this.users = response;
@@ -93,7 +93,9 @@ export class PlayerProfilesComponent implements OnInit {
     this.createPlayerProfileResponse = new CreatePlayerProfileResponse();
     this.playerProfilesService.postRegisterPlayer(this.createPlayerProfileRequest).subscribe(
       response => {
-        this.createPlayerProfileResponse = response
+        this.createPlayerProfileResponse = response;
+        if (this.createPlayerProfileResponse.state == ResponseState.Success)
+          this.loadAllProfiles();
         console.log(`Created user state ${this.createPlayerProfileResponse?.state}`);
       })
   }

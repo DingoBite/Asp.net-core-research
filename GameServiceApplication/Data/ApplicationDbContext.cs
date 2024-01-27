@@ -13,10 +13,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<PlayerCardLink> PlayersCardLinks { get; private set; }
     public DbSet<PlayerArtifactLink> PlayersArtifactLinks { get; private set; }
 
-    public DbSet<Artifact> ArtifactsData { get; private set; }
-    public DbSet<Card> CardsData { get; private set; }
-    public DbSet<Character> CharactersData { get; private set; }
-    public DbSet<Rarity> RaritiesData { get; private set; }
+    public DbSet<Artifact> Artifacts { get; private set; }
+    public DbSet<Card> Cards { get; private set; }
+    public DbSet<Character> Characters { get; private set; }
+    public DbSet<Rarity> Rarities { get; private set; }
 
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {

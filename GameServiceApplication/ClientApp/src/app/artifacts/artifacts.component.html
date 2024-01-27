@@ -4,39 +4,65 @@
     <div class="col">
       <div class="form-floating">
         <input type="text" placeholder="name" class="form-control" [(ngModel)]="createArtifactRequestRm.name">
-        <label class="text-primary form-label">User name</label>
+        <label class="text-primary form-label">Name</label>
       </div>
     </div>
     <div class="col">
       <div class="form-floating">
-        <input type="text" placeholder="description" class="form-control"
-               [(ngModel)]="createArtifactRequestRm.description">
-        <label class="text-primary form-label">Email</label>
+        <input type="text" placeholder="description" class="form-control" [(ngModel)]="createArtifactRequestRm.description">
+        <label class="text-primary form-label">Description</label>
       </div>
     </div>
     <div class="col">
       <div class="form-floating">
-        <input placeholder="type" class="form-control" [(ngModel)]="createArtifactRequestRm.effectType">
-        <label class="text-primary form-label">Phone</label>
+        <input type="number" min="0" placeholder="default cost" class="form-control"
+               [(ngModel)]="createArtifactRequestRm.defaultCost">
+        <label class="text-primary form-label">Default Cost</label>
+      </div>
+    </div>
+  </div>
+  <div class="row text-lg-center">
+    <div class="col">
+      <div>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ raritiesTypeToName[createArtifactRequestRm.rarity] }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div *ngFor="let r of raritiesPairs">
+              <a class="dropdown-item toast-body" (click)="createArtifactRequestRm.rarity = r.id">{{ r.name }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button"
+                  data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ effectTypeToName[createArtifactRequestRm.effectType] }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div *ngFor="let p of effectTypePairs">
+              <a class="dropdown-item  toast-body" (click)="createArtifactRequestRm.effectType = p.id">{{ p.name }}</a>
+            </div>
+          </div>
+        </div>
+        <!--        <input placeholder="type" class="form-control" [(ngModel)]="createArtifactRequestRm.effectType">-->
+        <!--        <label class="text-primary form-label">Effect Type</label>-->
       </div>
     </div>
     <div class="col">
       <div class="form-floating">
         <input type="number" placeholder="strength" class="form-control"
                [(ngModel)]="createArtifactRequestRm.effectStrength">
-        <label class="text-primary form-label">Phone</label>
-      </div>
-    </div>
-  </div>
-  <div class="row text-lg-center">
-    <div class="col">
-      <div class="form-floating">
-        <input placeholder="rarity" class="form-control" [(ngModel)]="createArtifactRequestRm.rarity">
-        <label class="text-primary form-label">Password</label>
+        <label class="text-primary form-label">Effect Strength</label>
       </div>
     </div>
     <div class="col text-lg-center">
-      <button type="submit" class="btn-primary btn" (click)="requestCreateArtifact()"><i class="fas fa-plus"></i> Register User
+      <button type="submit" class="btn-primary btn" (click)="requestCreateArtifact()"><i class="fas fa-plus"></i>
+        Register Artifact
       </button>
     </div>
   </div>
@@ -61,6 +87,9 @@
         <div class="col">
           <h6 class="card-title">Rarity</h6>
         </div>
+        <div class="col">
+          <h6 class="card-title">Default cost</h6>
+        </div>
       </div>
       <div *ngFor="let artifact of artifacts">
         <div class="row">
@@ -77,12 +106,17 @@
           </div>
           <div class="col">
             <h6 class="card-title" style="font-size: 16px">
-              {{ artifact.effectType }} : {{ artifact.effectStrength }}
+              {{ effectTypeToName[artifact.effectType] }} : {{ artifact.effectStrength }}
             </h6>
           </div>
           <div class="col">
             <h6 class="card-title" style="font-size: 16px">
-              {{ artifact.rarity }}
+              {{ raritiesTypeToName[artifact.rarityId] }}
+            </h6>
+          </div>
+          <div class="col">
+            <h6 class="card-title" style="font-size: 16px">
+              {{ artifact.defaultCost }}
             </h6>
           </div>
         </div>

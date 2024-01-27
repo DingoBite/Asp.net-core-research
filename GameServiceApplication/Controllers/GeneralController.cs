@@ -24,7 +24,7 @@ public class GeneralController : ControllerBase
     [HttpGet("rarities")]
     public async IAsyncEnumerable<IdNamePair> GetAllRarities()
     {
-        await using var searchAsync = _dbContext.RaritiesData.GetAsyncEnumerator();
+        await using var searchAsync = _dbContext.Rarities.GetAsyncEnumerator();
         while (await searchAsync.MoveNextAsync())
         {
             var rarity = searchAsync.Current;

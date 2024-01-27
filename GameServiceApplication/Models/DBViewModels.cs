@@ -11,12 +11,9 @@ public record PlayerItemAmount(int PlayerId, int ArtifactsAmount, int CardsAmoun
 [Keyless]
 public record PlayerInventoryElement(ItemType ItemType = ItemType.None, int ItemId = -1, int Quantity = 0);
 
-[Keyless]
-public record Artifact(int Id, string Name, string Description, ArtifactEffectType EffectType, int EffectStrength, string Rarity, RarityType RarityId);
-[Keyless]
-public record Card(int Id, string Name, string Description, CardAbilityType Ability, string Rarity, RarityType RarityId);
-[Keyless]
-public record Character(int Id, int Health, int Defence, int Attack, int Speed, string Name, string Rarity, RarityType RarityId);
+public record Artifact(int Id, string Name, string Description, ArtifactEffectType EffectType, int EffectStrength, RarityType RarityId, double DefaultCost);
+public record Card(int Id, string Name, string Description, CardAbilityType Ability, RarityType RarityId, double DefaultCost);
+public record Character(int Id, string Name, string Description, int Health, int Defence, int Attack, int Speed, RarityType RarityId, double DefaultCost);
 
 public enum ArtifactEffectType
 {

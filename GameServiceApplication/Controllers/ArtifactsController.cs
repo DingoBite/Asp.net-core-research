@@ -22,9 +22,19 @@ public class ArtifactsController : ControllerBase
     }
     
     [HttpGet("types")]
+    public IEnumerable<IdNamePair> GetAllTypes()
+    {
+        var artifactEffectTypes = Enum.GetNames<ArtifactEffectType>();
+        for (var i = 0; i < artifactEffectTypes.Length; i++)
+        {
+            yield return new IdNamePair(i, artifactEffectTypes[i]);
+        }
+    }
+    
+    [HttpGet]
     public async IAsyncEnumerable<Artifact> GetAllArtifactsInfo()
     {
-        await using var searchAsync = _dbContext.ArtifactsData.GetAsyncEnumerator();
+        await using var searchAsync = _dbContext.Artifacts.GetAsyncEnumerator();
         while (await searchAsync.MoveNextAsync())
         {
             yield return searchAsync.Current;
@@ -36,12 +46,17 @@ public class ArtifactsController : ControllerBase
     {
         try
         {
-            var rarity = await _dbContext.RaritiesData.Include(r => r.Id == artifactRegisterRequest.Rarity).FirstOrDefaultAsync();
-            var userRegisterDbRequest = new Artifact(0, artifactRegisterRequest.Name, artifactRegisterRequest.Description, (ArtifactEffectType)artifactRegisterRequest.EffectType, artifactRegisterRequest.EffectStrength, rarity.Name, (RarityType)artifactRegisterRequest.Rarity);
-            var registerUserResult = await _dbContext.ArtifactsData.AddAsync(userRegisterDbRequest);
+            var userRegisterDbRequest = new Artifact(0, artifactRegisterRequest.Name, artifactRegisterRequest.Description,
+                (ArtifactEffectType)artifactRegisterRequest.EffectType, artifactRegisterRequest.EffectStrength,
+                (RarityType)artifactRegisterRequest.Rarity, artifactRegisterRequest.DefaultCost);
+            
+            var registerUserResult = await _dbContext.Artifacts.AddAsync(userRegisterDbRequest);
 
             if (registerUserResult.State == EntityState.Added)
+            {
+                await _dbContext.SaveChangesAsync();
                 return new UserRegisterResponse(ResponseState.Success);
+            }
             
             return new UserRegisterResponse(ResponseState.UserExists);
         }

@@ -49,7 +49,7 @@
             <div *ngSwitchCase="ResponseState.PasswordsMismatch"><h6 class="text-danger">Passwords mismatch</h6></div>
             <div *ngSwitchCase="ResponseState.SomeFieldIsEmpty"><h6 class="text-danger">Some fields is empty</h6></div>
             <div *ngSwitchCase="ResponseState.Success"><h6 class="text-success">Success!</h6></div>
-            <div *ngSwitchCase="ResponseState.UserExists"><h6 class="text-success">Success!</h6></div>
+            <div *ngSwitchCase="ResponseState.UserExists"><h6 class="text-warning">User already exists</h6></div>
             <div *ngSwitchCase="ResponseState.UndefinedError"><h6 class="text-danger">Undefined Error</h6></div>
           </div>
         </ng-template>

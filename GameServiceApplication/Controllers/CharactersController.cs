@@ -10,31 +10,21 @@ namespace GameServiceApplication.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ArtifactsController : ControllerBase
+public class CharactersController : ControllerBase
 {
     private readonly ILogger<UsersController> _logger;
     private readonly ApplicationDbContext _dbContext;
 
-    public ArtifactsController(ILogger<UsersController> logger, ApplicationDbContext dbContext)
+    public CharactersController(ILogger<UsersController> logger, ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
         _logger = logger;
     }
     
-    [HttpGet("types")]
-    public IEnumerable<IdNamePair> GetAllTypes()
-    {
-        var artifactEffectTypes = Enum.GetNames<ArtifactEffectType>();
-        for (var i = 0; i < artifactEffectTypes.Length; i++)
-        {
-            yield return new IdNamePair(i, artifactEffectTypes[i]);
-        }
-    }
-    
     [HttpGet]
-    public async IAsyncEnumerable<Artifact> GetAllInfo()
+    public async IAsyncEnumerable<Character> GetAllInfo()
     {
-        await using var searchAsync = _dbContext.Artifacts.GetAsyncEnumerator();
+        await using var searchAsync = _dbContext.Characters.GetAsyncEnumerator();
         while (await searchAsync.MoveNextAsync())
         {
             yield return searchAsync.Current;
@@ -46,11 +36,11 @@ public class ArtifactsController : ControllerBase
     {
         try
         {
-            var entity = await _dbContext.Artifacts.FirstOrDefaultAsync(a => a.Id == id);
+            var entity = await _dbContext.Characters.FirstOrDefaultAsync(a => a.Id == id);
             if (entity == null)
                 return;
 
-            _dbContext.Artifacts.Remove(entity);
+            _dbContext.Characters.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
@@ -58,18 +48,16 @@ public class ArtifactsController : ControllerBase
             Console.WriteLine(e);
         }
     }
-
     
     [HttpPost]
-    public async Task<UserRegisterResponse> PostRegister([FromBody] ArtifactRegisterRequest request)
+    public async Task<UserRegisterResponse> PostRegister([FromBody] CharacterRegisterRequest request)
     {
         try
         {
-            var userRegisterDbRequest = new Artifact(0, request.Name, request.Description,
-                (ArtifactEffectType)request.EffectType, request.EffectStrength,
-                (RarityType)request.Rarity, request.DefaultCost);
+            var userRegisterDbRequest = new Character(0, request.Name, request.Description,
+                request.Health, request.Defence, request.Attack, request.Speed, (RarityType)request.RarityId, request.DefaultCost);
             
-            var registerUserResult = await _dbContext.Artifacts.AddAsync(userRegisterDbRequest);
+            var registerUserResult = await _dbContext.Characters.AddAsync(userRegisterDbRequest);
 
             if (registerUserResult.State == EntityState.Added)
             {

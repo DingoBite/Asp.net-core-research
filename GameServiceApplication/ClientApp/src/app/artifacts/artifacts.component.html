@@ -55,14 +55,14 @@
     </div>
     <div class="col">
       <div class="form-floating">
-        <input type="number" placeholder="strength" class="form-control"
+        <input type="number" min="0" placeholder="strength" class="form-control"
                [(ngModel)]="createArtifactRequestRm.effectStrength">
         <label class="text-primary form-label">Effect Strength</label>
       </div>
     </div>
     <div class="col text-lg-center">
-      <button type="submit" class="btn-primary btn" (click)="requestCreateArtifact()"><i class="fas fa-plus"></i>
-        Register Artifact
+      <button type="submit" class="btn-primary btn" (click)="requestCreate()"><i class="fas fa-plus"></i>
+        Register
       </button>
     </div>
   </div>
@@ -94,7 +94,7 @@
       <div *ngFor="let artifact of artifacts">
         <div class="row">
           <div class="col-1">
-            <h6 class="card-title" style="color: rgba(135,151,137,0.5)">{{ artifact.id }}</h6>
+            <h6 class="card-title" style="color: rgba(135,151,137,0.5)" (click)="requestRemove(artifact.id)">{{ artifact.id }}</h6>
           </div>
           <div class="col">
             <h6 class="card-title">{{ artifact.name }}</h6>

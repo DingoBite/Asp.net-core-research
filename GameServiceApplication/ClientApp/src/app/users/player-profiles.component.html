@@ -76,9 +76,9 @@
         </div>
       </div>
       <div *ngFor="let user of users">
-        <div class="row" (click)="playerProfilesService.redirectToProfilePage(user.playerId)">
+        <div class="row">
           <div class="col-1">
-            <h6 class="card-title" style="color: rgba(135,151,137,0.5)">{{ user.playerId }}</h6>
+            <h6 class="card-title" style="color: rgba(135,151,137,0.5)" (click)="removeUser(user.playerId)">{{ user.playerId }}</h6>
           </div>
           <div class="col">
             <h6 class="card-title">{{ user.name }}</h6>

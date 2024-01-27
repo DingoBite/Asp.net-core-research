@@ -100,5 +100,9 @@ export class PlayerProfilesComponent implements OnInit {
       })
   }
 
+  removeUser(id: number){
+    this.playerProfilesService.postRemove(id);
+  }
+
   protected readonly ResponseState = ResponseState;
 }

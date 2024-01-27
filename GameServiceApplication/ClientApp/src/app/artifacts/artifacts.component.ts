@@ -50,6 +50,18 @@ export class IdNamePair implements IdNamePairRm{
   name = ""
 }
 
+export interface IdNameTypePairRm {
+  id: number
+  name: string
+  type: number
+}
+
+export class IdNameTypePair implements IdNameTypePairRm {
+  id = 0
+  name = ""
+  type = 0
+}
+
 @Component({
   selector: 'app-artifacts',
   templateUrl: './artifacts.component.html',
@@ -74,7 +86,7 @@ export class ArtifactsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAllArtifacts();
+    this.loadAll();
     this.artifactsService.init(this.route);
 
     this.artifactsService.getAvailableTypesDict()
@@ -102,19 +114,27 @@ export class ArtifactsComponent implements OnInit {
       });
   }
 
-  loadAllArtifacts(): void {
-    this.artifactsService.getAllArtifacts()
+  loadAll(): void {
+    this.artifactsService.getAll()
       .subscribe(response => {
         this.artifacts = response;
       });
   }
 
-  requestCreateArtifact(): void {
+  requestRemove(id: number): void {
+    this.artifactsService.postRemove(id).subscribe(
+      response => {
+        console.log(`Removed artifact`);
+        this.loadAll();
+      })
+  }
+
+  requestCreate(): void {
     console.log(this.createArtifactRequestRm);
-    this.artifactsService.postRegisterArtifact(this.createArtifactRequestRm).subscribe(
+    this.artifactsService.postRegister(this.createArtifactRequestRm).subscribe(
       response => {
         console.log(`Created artifact`);
-        this.loadAllArtifacts();
+        this.loadAll();
       })
   }
 }

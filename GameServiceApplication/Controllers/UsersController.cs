@@ -94,20 +94,24 @@ public partial class UsersController : ControllerBase
         }
     }
 
-    [HttpGet("profiles/profile/{id:int}")]
-    public async Task<PlayerProfile> GetPlayerProfileInformation(int id)
+    [HttpPost("remove")]
+    public async Task PostRemove([FromBody] int id)
     {
-        var playerProfile = await _dbContext.PlayerProfiles.FirstOrDefaultAsync(x => x.Id == id);
-        return playerProfile ?? new PlayerProfile();
-    }
+        try
+        {
+            var entity = await _dbContext.PlayerProfiles.FirstOrDefaultAsync(a => a.Id == id);
+            if (entity == null)
+                return;
 
-    [HttpGet("profiles/balance/{id:int}")]
-    public async Task<PlayerGameData> GetPlayerGameData(int id)
-    {
-        var playerProfile = await _dbContext.PlayersGameData.FirstOrDefaultAsync(x => x.PlayerId == id);
-        return playerProfile ?? new PlayerGameData();
+            _dbContext.PlayerProfiles.Remove(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
-
+    
     [HttpGet("profiles/inventory/{id:int}")]
     public IQueryable<PlayerInventoryElement> GetPlayerInventory(int id)
     {

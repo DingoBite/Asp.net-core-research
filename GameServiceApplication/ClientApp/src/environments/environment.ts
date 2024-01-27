@@ -11,12 +11,16 @@ export const environment = {
   charactersEndpoint: "/characters",
 
   availableTypesEndpoint: "/types",
+  removeEndpoint: "/remove",
 
   usersEndpoint: "/users",
   userProfilesEndpoint: "/profiles",
   profileEndpoint: "/profile",
   balanceEndpoint: "/balance",
   inventoryEndpoint: "/inventory",
+
+  addItemEndpoint: "/add",
+  removeItemEndpoint: "/remove",
 
   idParameterEndpoint: "/:id",
   generalEndpoint: "/general",

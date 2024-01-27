@@ -14,6 +14,7 @@ import {
 })
 export class PlayerProfilesService {
   private playerProfilesUrl= environment.apiBaseUrl + environment.usersEndpoint;
+  private removeUrl= this.playerProfilesUrl + environment.removeEndpoint;
 
   constructor(private http: HttpClient, private routerService: ProfileRouterService) {}
 
@@ -26,7 +27,12 @@ export class PlayerProfilesService {
   }
 
   redirectToProfilePage(id: number): void {
-    this.routerService.rerouteToProfileWithId(id);
+    this.routerService.rerouteToInventory(id);
+  }
+
+  postRemove(id: number): void{
+    console.log(this.removeUrl)
+    this.http.post<any>(this.removeUrl, id)
   }
 
   init(route: ActivatedRoute) {

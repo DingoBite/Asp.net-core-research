@@ -46,8 +46,6 @@ const userProfilesEndpoint = usersEndpoint + environment.userProfilesEndpoint;
       {path: cardsEndpoint, component: CardsComponent, pathMatch: 'full'},
       {path: charactersEndpoint, component: CharactersComponent, pathMatch: 'full'},
       {path: userProfilesEndpoint, redirectTo: usersEndpoint, pathMatch: "full"},
-      {path: userProfilesEndpoint + environment.profileEndpoint + environment.idParameterEndpoint, component: ProfileComponent},
-      {path: userProfilesEndpoint + environment.balanceEndpoint + environment.idParameterEndpoint, component: BalanceComponent},
       {path: userProfilesEndpoint + environment.inventoryEndpoint + environment.idParameterEndpoint, component: InventoryComponent},
     ],
     // {

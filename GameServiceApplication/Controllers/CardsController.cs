@@ -10,12 +10,12 @@ namespace GameServiceApplication.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ArtifactsController : ControllerBase
+public class CardsController : ControllerBase
 {
     private readonly ILogger<UsersController> _logger;
     private readonly ApplicationDbContext _dbContext;
 
-    public ArtifactsController(ILogger<UsersController> logger, ApplicationDbContext dbContext)
+    public CardsController(ILogger<UsersController> logger, ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
         _logger = logger;
@@ -24,7 +24,7 @@ public class ArtifactsController : ControllerBase
     [HttpGet("types")]
     public IEnumerable<IdNamePair> GetAllTypes()
     {
-        var artifactEffectTypes = Enum.GetNames<ArtifactEffectType>();
+        var artifactEffectTypes = Enum.GetNames<CardAbilityType>();
         for (var i = 0; i < artifactEffectTypes.Length; i++)
         {
             yield return new IdNamePair(i, artifactEffectTypes[i]);
@@ -32,25 +32,25 @@ public class ArtifactsController : ControllerBase
     }
     
     [HttpGet]
-    public async IAsyncEnumerable<Artifact> GetAllInfo()
+    public async IAsyncEnumerable<Card> GetAllInfo()
     {
-        await using var searchAsync = _dbContext.Artifacts.GetAsyncEnumerator();
+        await using var searchAsync = _dbContext.Cards.GetAsyncEnumerator();
         while (await searchAsync.MoveNextAsync())
         {
             yield return searchAsync.Current;
         }
     }
-
+    
     [HttpPost("remove")]
     public async Task PostRemove([FromBody] int id)
     {
         try
         {
-            var entity = await _dbContext.Artifacts.FirstOrDefaultAsync(a => a.Id == id);
+            var entity = await _dbContext.Cards.FirstOrDefaultAsync(a => a.Id == id);
             if (entity == null)
                 return;
 
-            _dbContext.Artifacts.Remove(entity);
+            _dbContext.Cards.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
         catch (Exception e)
@@ -59,17 +59,16 @@ public class ArtifactsController : ControllerBase
         }
     }
 
-    
     [HttpPost]
-    public async Task<UserRegisterResponse> PostRegister([FromBody] ArtifactRegisterRequest request)
+    public async Task<UserRegisterResponse> PostRegister([FromBody] CardRegisterRequest request)
     {
         try
         {
-            var userRegisterDbRequest = new Artifact(0, request.Name, request.Description,
-                (ArtifactEffectType)request.EffectType, request.EffectStrength,
+            var userRegisterDbRequest = new Card(0, request.Name, request.Description,
+                (CardAbilityType)request.AbilityType,
                 (RarityType)request.Rarity, request.DefaultCost);
             
-            var registerUserResult = await _dbContext.Artifacts.AddAsync(userRegisterDbRequest);
+            var registerUserResult = await _dbContext.Cards.AddAsync(userRegisterDbRequest);
 
             if (registerUserResult.State == EntityState.Added)
             {

@@ -27,8 +27,8 @@ export class ProfileRouterService {
     this.rerouteService.redirectToPageWithCurrentId(this.balancePage);
   }
 
-  rerouteToInventory(): void {
-    this.rerouteService.redirectToPageWithCurrentId(this.inventoryPage);
+  rerouteToInventory(id: number): void {
+    this.rerouteService.redirectToPageWithId(this.inventoryPage, id);
   }
 
   init(route: ActivatedRoute) {

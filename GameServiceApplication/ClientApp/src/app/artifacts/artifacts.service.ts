@@ -10,15 +10,16 @@ import {ArtifactRm, CreateArtifactRequestRm, IdNamePair, IdNamePairRm} from "./a
   providedIn: 'root'
 })
 export class ArtifactsService {
-  private artifactsUrl= environment.apiBaseUrl + environment.artifactsEndpoint;
-  private availableTypes = this.artifactsUrl + environment.availableTypesEndpoint;
+  private controllerUrl= environment.apiBaseUrl + environment.artifactsEndpoint;
+  private removeUrl= this.controllerUrl + environment.removeEndpoint;
+  private availableTypes = this.controllerUrl + environment.availableTypesEndpoint;
   private generalUrl = environment.apiBaseUrl + environment.generalEndpoint;
   private availableRarities = this.generalUrl + environment.availableRaritiesEndpoint;
 
   constructor(private http: HttpClient, private routerService: ProfileRouterService) {}
 
-  getAllArtifacts(): Observable<ArtifactRm[]>{
-    return this.http.get<ArtifactRm[]>(this.artifactsUrl);
+  getAll(): Observable<ArtifactRm[]>{
+    return this.http.get<ArtifactRm[]>(this.controllerUrl);
   }
 
   getAvailableTypesDict(): Observable<IdNamePairRm[]>{
@@ -29,8 +30,12 @@ export class ArtifactsService {
     return this.http.get<IdNamePair[]>(this.availableRarities);
   }
 
-  postRegisterArtifact(request: CreateArtifactRequestRm): Observable<any>{
-    return this.http.post<any>(this.artifactsUrl, request)
+  postRegister(request: CreateArtifactRequestRm): Observable<any>{
+    return this.http.post<any>(this.controllerUrl, request)
+  }
+
+  postRemove(id: number): Observable<any>{
+    return this.http.post<any>(this.removeUrl, id)
   }
 
   init(route: ActivatedRoute) {

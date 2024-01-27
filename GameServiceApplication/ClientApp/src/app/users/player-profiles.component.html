@@ -1,3 +1,61 @@
+<h5 class="text-md-center m-5">Add new Profile</h5>
+<div class="m-5 d-grid gap-3">
+  <div class="row">
+    <div class="col">
+      <div class="form-floating">
+        <input type="text" placeholder="name" class="form-control" [(ngModel)]="createPlayerProfileRequest.userName">
+        <label class="text-primary form-label">User name</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input type="email" placeholder="email" class="form-control" [(ngModel)]="createPlayerProfileRequest.email">
+        <label class="text-primary form-label">Email</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input placeholder="phone" class="form-control" [(ngModel)]="createPlayerProfileRequest.phone">
+        <label class="text-primary form-label">Phone</label>
+      </div>
+    </div>
+  </div>
+  <div class="row text-lg-center">
+    <div class="col">
+      <div class="form-floating">
+        <input type="password" placeholder="password" class="form-control" [(ngModel)]="createPlayerProfileRequest.password">
+        <label class="text-primary form-label">Password</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input type="password" placeholder="confirm password" class="form-control" [(ngModel)]="createPlayerProfileRequest.confirmPassword">
+        <label class="text-primary form-label">Confirm password</label>
+      </div>
+    </div>
+    <div class="col text-lg-center">
+      <div class="row">
+        <button type="submit" class="btn-primary btn" (click)="requestCreateUser()"><i class="fas fa-plus"></i> Create
+          User
+        </button>
+      </div>
+      <div class="row">
+        <div *ngIf="createPlayerProfileResponse == undefined; else elseBlock"><h6 class="text-white"></h6></div>
+        <ng-template #elseBlock>
+          <div [ngSwitch]="createPlayerProfileResponse?.state">
+            <div *ngSwitchCase="ResponseState.Waiting"><h6 class="text-secondary">Waiting</h6></div>
+            <div *ngSwitchCase="ResponseState.InvalidEmail"><h6 class="text-danger">Invalid Email</h6></div>
+            <div *ngSwitchCase="ResponseState.InvalidPhone"><h6 class="text-danger">Invalid Phone</h6></div>
+            <div *ngSwitchCase="ResponseState.PasswordIsTooWeak"><h6 class="text-danger">Password is too weak</h6></div>
+            <div *ngSwitchCase="ResponseState.PasswordsMismatch"><h6 class="text-danger">Passwords mismatch</h6></div>
+            <div *ngSwitchCase="ResponseState.SomeFieldIsEmpty"><h6 class="text-danger">Some fields is empty</h6></div>
+            <div *ngSwitchCase="ResponseState.Success"><h6 class="text-success">Success!</h6></div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
 <h5 class="text-md-center m-5">Player Profiles</h5>
 <div class="card text-dark mt-5 ms-auto text-start border-0">
   <div class="card-body text-center">
@@ -19,20 +77,20 @@
       <div *ngFor="let user of users">
         <div class="row" (click)="playerProfilesService.redirectToProfilePage(user.playerId)">
           <div class="col-1">
-            <h6 class="card-title" style="color: rgba(135,151,137,0.5)">{{user.playerId}}</h6>
+            <h6 class="card-title" style="color: rgba(135,151,137,0.5)">{{ user.playerId }}</h6>
           </div>
           <div class="col">
-            <h6 class="card-title">{{user.name}}</h6>
+            <h6 class="card-title">{{ user.name }}</h6>
           </div>
           <div class="col">
             <h6 class="card-title" style="font-size: 12px">
-              {{user.email}}
+              {{ user.email }}
             </h6>
           </div>
           <div class="col">
             <h6 class="card-title" style="font-size: 16px">
-<!--              <i class="fa fa-phone pe-2" style="font-size: 14px" ></i>-->
-              {{user.phoneNumber}}
+              <!--              <i class="fa fa-phone pe-2" style="font-size: 14px" ></i>-->
+              {{ user.phoneNumber }}
             </h6>
           </div>
         </div>

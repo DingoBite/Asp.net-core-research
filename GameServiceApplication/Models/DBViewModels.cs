@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace GameServiceApplication.ReadModels;
+namespace GameServiceApplication.Models;
 
 [Keyless]
 public record PlayerCoreInformation(int PlayerId, string Name, string Email, string PhoneNumber);

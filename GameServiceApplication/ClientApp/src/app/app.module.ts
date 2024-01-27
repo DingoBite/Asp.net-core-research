@@ -12,6 +12,13 @@ import {environment} from "../environments/environment";
 import {ProfileComponent} from "./profile/profile.component";
 import {BalanceComponent} from "./balance/balance.component";
 import {InventoryComponent} from "./inventory/inventory.component";
+import {CharactersComponent} from "./characters/characters.component";
+import {ArtifactsComponent} from "./artifacts/artifacts.component";
+import {CardsComponent} from "./cards/cards.component";
+
+const artifactsEndpoint = environment.artifactsEndpoint.substring(1);
+const cardsEndpoint = environment.cardsEndpoint.substring(1);
+const charactersEndpoint = environment.charactersEndpoint.substring(1);
 
 const usersEndpoint = environment.usersEndpoint.substring(1);
 const userProfilesEndpoint = usersEndpoint + environment.userProfilesEndpoint;
@@ -21,6 +28,9 @@ const userProfilesEndpoint = usersEndpoint + environment.userProfilesEndpoint;
     AppComponent,
     NavMenuComponent,
     PlayerProfilesComponent,
+    ArtifactsComponent,
+    CardsComponent,
+    CharactersComponent,
     ProfileComponent,
     BalanceComponent,
     InventoryComponent
@@ -32,6 +42,9 @@ const userProfilesEndpoint = usersEndpoint + environment.userProfilesEndpoint;
     RouterModule.forRoot([
       {path: '', redirectTo: usersEndpoint, pathMatch: "full"},
       {path: usersEndpoint, component: PlayerProfilesComponent, pathMatch: 'full'},
+      {path: artifactsEndpoint, component: ArtifactsComponent, pathMatch: 'full'},
+      {path: cardsEndpoint, component: CardsComponent, pathMatch: 'full'},
+      {path: charactersEndpoint, component: CharactersComponent, pathMatch: 'full'},
       {path: userProfilesEndpoint, redirectTo: usersEndpoint, pathMatch: "full"},
       {path: userProfilesEndpoint + environment.profileEndpoint + environment.idParameterEndpoint, component: ProfileComponent},
       {path: userProfilesEndpoint + environment.balanceEndpoint + environment.idParameterEndpoint, component: BalanceComponent},

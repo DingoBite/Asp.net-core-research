@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {PlayerProfileRm} from "../users/player-profile.rm";
-import {RouterService} from "../general/router.service";
 import {ProfileRouterService} from "../general/profile-router.service";
+import {PlayerProfileRm} from "../users/player-profiles.component";
 
 @Injectable({
   providedIn: 'root'

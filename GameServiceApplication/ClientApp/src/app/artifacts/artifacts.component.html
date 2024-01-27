@@ -1,1 +1,95 @@
-<p>artifacts works!</p>
+<h5 class="text-md-center m-5">Register new Artifact</h5>
+<div class="m-5 d-grid gap-3">
+  <div class="row">
+    <div class="col">
+      <div class="form-floating">
+        <input type="text" placeholder="name" class="form-control" [(ngModel)]="createArtifactRequestRm.name">
+        <label class="text-primary form-label">User name</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input type="text" placeholder="description" class="form-control"
+               [(ngModel)]="createArtifactRequestRm.description">
+        <label class="text-primary form-label">Email</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input placeholder="type" class="form-control" [(ngModel)]="createArtifactRequestRm.effectType">
+        <label class="text-primary form-label">Phone</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input type="number" placeholder="strength" class="form-control"
+               [(ngModel)]="createArtifactRequestRm.effectStrength">
+        <label class="text-primary form-label">Phone</label>
+      </div>
+    </div>
+  </div>
+  <div class="row text-lg-center">
+    <div class="col">
+      <div class="form-floating">
+        <input placeholder="rarity" class="form-control" [(ngModel)]="createArtifactRequestRm.rarity">
+        <label class="text-primary form-label">Password</label>
+      </div>
+    </div>
+    <div class="col text-lg-center">
+      <button type="submit" class="btn-primary btn" (click)="requestCreateArtifact()"><i class="fas fa-plus"></i> Register User
+      </button>
+    </div>
+  </div>
+</div>
+<h5 class="text-md-center m-5">Artifacts</h5>
+<div class="card text-dark mt-5 ms-auto text-start border-0">
+  <div class="card-body text-center">
+    <div class="d-grid">
+      <div class="row sticky-top bg-white pb-2">
+        <div class="col-1">
+          <h5 class="card-title" style="color: rgba(135,151,137,0.5)">Id</h5>
+        </div>
+        <div class="col">
+          <h6 class="card-title">Name</h6>
+        </div>
+        <div class="col">
+          <h6 class="card-title">Description</h6>
+        </div>
+        <div class="col">
+          <h6 class="card-title">Effect Type</h6>
+        </div>
+        <div class="col">
+          <h6 class="card-title">Rarity</h6>
+        </div>
+      </div>
+      <div *ngFor="let artifact of artifacts">
+        <div class="row">
+          <div class="col-1">
+            <h6 class="card-title" style="color: rgba(135,151,137,0.5)">{{ artifact.id }}</h6>
+          </div>
+          <div class="col">
+            <h6 class="card-title">{{ artifact.name }}</h6>
+          </div>
+          <div class="col">
+            <h6 class="card-title" style="font-size: 12px">
+              {{ artifact.description }}
+            </h6>
+          </div>
+          <div class="col">
+            <h6 class="card-title" style="font-size: 16px">
+              {{ artifact.effectType }} : {{ artifact.effectStrength }}
+            </h6>
+          </div>
+          <div class="col">
+            <h6 class="card-title" style="font-size: 16px">
+              {{ artifact.rarity }}
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

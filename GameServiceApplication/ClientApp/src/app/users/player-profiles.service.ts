@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {PlayerProfileRm} from "./player-profile.rm";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ProfileRouterService} from "../general/profile-router.service";
 import {ActivatedRoute} from "@angular/router";
 import {
   CreatePlayerProfileRequestRm,
-  CreatePlayerProfileResponse,
-  CreatePlayerProfileResponseRm
+  CreatePlayerProfileResponseRm, PlayerProfileRm
 } from "./player-profiles.component";
 
 @Injectable({
@@ -23,16 +21,12 @@ export class PlayerProfilesService {
     return this.http.get<PlayerProfileRm[]>(this.playerProfilesUrl);
   }
 
-  postCreatePlayer(request: CreatePlayerProfileRequestRm): Observable<CreatePlayerProfileResponseRm>{
-    return this.http.post<CreatePlayerProfileResponseRm>(this.playerProfilesUrl, JSON.stringify(request))
+  postRegisterPlayer(request: CreatePlayerProfileRequestRm): Observable<CreatePlayerProfileResponseRm>{
+    return this.http.post<CreatePlayerProfileResponseRm>(this.playerProfilesUrl, request)
   }
 
   redirectToProfilePage(id: number): void {
     this.routerService.rerouteToProfileWithId(id);
-  }
-
-  private makeIdEndpoint(url: string, id: number): string {
-    return url + `/${id}`;
   }
 
   init(route: ActivatedRoute) {

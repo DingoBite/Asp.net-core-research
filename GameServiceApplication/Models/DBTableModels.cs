@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace GameServiceApplication.ReadModels;
+namespace GameServiceApplication.Models;
 
-public record PlayerProfile(int Id = -1, string Email = "None", string PasswordHash = "None", string Name = "None", string PhoneNumber = "None", int HashSalt = 0, DateTime RegistrationDate = new());
+public record PlayerProfile(int Id = -1, string Name = "None", string Email = "None", string PhoneNumber = "None", string PasswordHash = "None", int HashSalt = 0, DateTime RegistrationDate = new());
 
 [Keyless]
 public record PlayerGameData(int PlayerId = -1, float Gold = -1, float Crystals = -1, int Level = -1, int BattlepassLevel = -1, DateTime ActiveBattlepassUntil = new ());

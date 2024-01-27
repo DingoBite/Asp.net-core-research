@@ -1,9 +1,9 @@
-<h5 class="text-md-center m-5">Add new Profile</h5>
+<h5 class="text-md-center m-5">Register new Player</h5>
 <div class="m-5 d-grid gap-3">
   <div class="row">
     <div class="col">
       <div class="form-floating">
-        <input type="text" placeholder="name" class="form-control" [(ngModel)]="createPlayerProfileRequest.userName">
+        <input type="text" placeholder="name" class="form-control" [(ngModel)]="createPlayerProfileRequest.name">
         <label class="text-primary form-label">User name</label>
       </div>
     </div>
@@ -15,7 +15,7 @@
     </div>
     <div class="col">
       <div class="form-floating">
-        <input placeholder="phone" class="form-control" [(ngModel)]="createPlayerProfileRequest.phone">
+        <input placeholder="phone" class="form-control" [(ngModel)]="createPlayerProfileRequest.phoneNumber">
         <label class="text-primary form-label">Phone</label>
       </div>
     </div>
@@ -35,8 +35,7 @@
     </div>
     <div class="col text-lg-center">
       <div class="row">
-        <button type="submit" class="btn-primary btn" (click)="requestCreateUser()"><i class="fas fa-plus"></i> Create
-          User
+        <button type="submit" class="btn-primary btn" (click)="requestCreateUser()"><i class="fas fa-plus"></i> Register User
         </button>
       </div>
       <div class="row">
@@ -50,6 +49,8 @@
             <div *ngSwitchCase="ResponseState.PasswordsMismatch"><h6 class="text-danger">Passwords mismatch</h6></div>
             <div *ngSwitchCase="ResponseState.SomeFieldIsEmpty"><h6 class="text-danger">Some fields is empty</h6></div>
             <div *ngSwitchCase="ResponseState.Success"><h6 class="text-success">Success!</h6></div>
+            <div *ngSwitchCase="ResponseState.UserExists"><h6 class="text-success">Success!</h6></div>
+            <div *ngSwitchCase="ResponseState.UndefinedError"><h6 class="text-danger">Undefined Error</h6></div>
           </div>
         </ng-template>
       </div>

@@ -1,22 +1,41 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayerProfilesService} from "./player-profiles.service";
-import {PlayerProfileRm} from "./player-profile.rm";
 import {ActivatedRoute} from "@angular/router";
 
+export interface PlayerProfileRm {
+  playerId: number;
+  email: string;
+  passwordHash: string;
+  name: string;
+  phoneNumber: string;
+  registrationDate: Date;
+  hashSalt: number;
+}
+
+export class PlayerProfile implements PlayerProfileRm {
+  email = "";
+  hashSalt = 0;
+  name = "";
+  passwordHash = "";
+  phoneNumber = "";
+  playerId = -1;
+  registrationDate = new Date();
+}
+
 export interface CreatePlayerProfileRequestRm {
-  userName: string,
+  name: string,
   email: string,
-  phone: string,
+  phoneNumber: string,
   password: string,
   confirmPassword: string
 }
 
 export class CreatePlayerProfileRequest implements CreatePlayerProfileRequestRm {
-  confirmPassword = "";
+  name = "";
   email = "";
+  phoneNumber = "";
   password = "";
-  phone = "";
-  userName = "";
+  confirmPassword = "";
 }
 
 export enum ResponseState {
@@ -26,14 +45,16 @@ export enum ResponseState {
   SomeFieldIsEmpty,
   PasswordIsTooWeak,
   PasswordsMismatch,
-  Success
+  Success,
+  UserExists,
+  UndefinedError,
 }
 
 export interface CreatePlayerProfileResponseRm {
   state: ResponseState,
 }
 
-export class CreatePlayerProfileResponse implements CreatePlayerProfileResponseRm{
+export class CreatePlayerProfileResponse implements CreatePlayerProfileResponseRm {
   state = ResponseState.Waiting
 }
 
@@ -42,11 +63,17 @@ export class CreatePlayerProfileResponse implements CreatePlayerProfileResponseR
   templateUrl: './player-profiles.component.html',
   styleUrls: ['./player-profiles.component.css']
 })
-export class PlayerProfilesComponent implements OnInit{
+export class PlayerProfilesComponent implements OnInit {
   public createPlayerProfileResponse: CreatePlayerProfileResponseRm | undefined;
-  public createPlayerProfileRequest = new CreatePlayerProfileRequest();
+
+  public createPlayerProfileRequest: CreatePlayerProfileRequest = {
+    name: "Test", email: "test@gmail.com", phoneNumber: "+7978777777", password: "123123", confirmPassword: "123123"
+  };
+
   public users: PlayerProfileRm[] = [];
-  constructor(public readonly playerProfilesService: PlayerProfilesService, private route: ActivatedRoute) {}
+
+  constructor(public readonly playerProfilesService: PlayerProfilesService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.subscribe();
@@ -62,12 +89,13 @@ export class PlayerProfilesComponent implements OnInit{
   }
 
   requestCreateUser(): void {
+    console.log(this.createPlayerProfileRequest);
     this.createPlayerProfileResponse = new CreatePlayerProfileResponse();
-    this.playerProfilesService.postCreatePlayer(this.createPlayerProfileRequest).subscribe(
+    this.playerProfilesService.postRegisterPlayer(this.createPlayerProfileRequest).subscribe(
       response => {
         this.createPlayerProfileResponse = response
         console.log(`Created user state ${this.createPlayerProfileResponse?.state}`);
-    })
+      })
   }
 
   protected readonly ResponseState = ResponseState;

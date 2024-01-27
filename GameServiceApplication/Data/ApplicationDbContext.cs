@@ -1,4 +1,4 @@
-﻿using GameServiceApplication.ReadModels;
+﻿using GameServiceApplication.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameServiceApplication.Data;
@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext
 
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

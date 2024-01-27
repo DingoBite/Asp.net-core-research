@@ -57,8 +57,7 @@ app.MapControllerRoute(
     pattern: "{controller}/{action}/{id?}",
     defaults: new
     {
-        controller = "Authorization",
-        action = "IsAuthorized"
+        controller = "Users",
     }
     );
 

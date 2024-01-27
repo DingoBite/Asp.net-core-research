@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {PlayerProfilesService} from "../users/player-profiles.service";
-import {ProfileRouterService} from "../general/profile-router.service";
 import {ProfileService} from "./profile.service";
-import {PlayerProfile, PlayerProfileRm} from "../users/player-profile.rm";
 import {ActivatedRoute} from "@angular/router";
+import {PlayerProfile} from "../users/player-profiles.component";
 
 @Component({
   selector: 'app-profile',
